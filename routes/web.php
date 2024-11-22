@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\MaquinarioController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\FuncionarioController;
@@ -13,17 +14,18 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-
 Route::resource('suplementos', SuplementoController::class);
 Route::resource('funcionarios', FuncionarioController::class);
 Route::resource('categorias', CategoriaController::class);
-Route::get('/maquinarios', [MaquinarioController::class, 'index'])->name('maquinarios.index');
-Route::get('/maquinarios/create', [MaquinarioController::class, 'create'])->name('maquinarios.create');
-Route::post('/maquinarios', [MaquinarioController::class, 'store'])->name('maquinarios.store');
-Route::get('/maquinarios/{maquinario}', [MaquinarioController::class, 'show'])->name('maquinarios.show');
-Route::get('/maquinarios/{maquinario}/edit', [MaquinarioController::class, 'edit'])->name('maquinarios.edit');
-Route::put('/maquinarios/{maquinario}', [MaquinarioController::class, 'update'])->name('maquinarios.update');
-Route::delete('/maquinarios/{maquinario}', [MaquinarioController::class, 'destroy'])->name('maquinarios.destroy');
+Route::resource('maquinarios', MaquinarioController::class);
+Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
+Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
+Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
+Route::get('/clientes/{cliente}', [ClienteController::class, 'show'])->name('clientes.show');
+Route::get('/clientes/{cliente}/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
+Route::put('/clientes/{cliente}', [ClienteController::class, 'update'])->name('clientes.update');
+Route::delete('/clientes/{cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
+
 
 
 Route::get('/dashboard', function () {

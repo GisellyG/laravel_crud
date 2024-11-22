@@ -35,15 +35,17 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $created = $this->categoria->create([
-            'funcao' => $request->input('nome')
-        ]);  
-
-        if($created){
-            return redirect()->route('categorias.index')->with('message', 'Criado com Sucesso!');
-        }
-
-        return redirect()->back()->with('message', 'Erro ao Criar!');
+        $request->validate([
+            'nome' => 'required|string|max:255'
+        ], [
+            'nome.required' => 'Esse campo é obrigatório.',
+        ]);
+    
+        Categoria::create([
+            'nome' => $request->input('nome')
+        ]);
+ 
+        return redirect()->route('categorias.index')->with('message', 'Categoria criada com sucesso!');
     }
 
     /**
@@ -67,13 +69,19 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $updated = $this->categoria->where('id', $id)->update($request->except(['_token','_method']));
+        $request->validate([
+            'nome' => 'required|string|max:255'
+        ], [
+            'nome.required' => 'Esse campo é obrigatório.',
+        ]);
+    
+        $categoria = Categoria::findOrFail($id);
 
-        if($updated){
-            return redirect()->route('categorias.index')->with('message', 'Atualizado com Sucesso!');
-        }
-
-        return redirect()->back()->with('message', 'Erro ao atualizar!');
+        $categoria->update([
+            'nome' => $request->input('nome')
+        ]);
+    
+        return redirect()->route('categorias.index')->with('message', 'Categoria atualizada com sucesso!');
     }
 
     /**

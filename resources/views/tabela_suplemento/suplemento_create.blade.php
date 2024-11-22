@@ -1,58 +1,90 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto py-12">
-        <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Cadastrar Suplemento</h2>
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">Cadastrar Suplemento</h2>
+        </div>
 
         @if (session()->has('message'))
-            <div class="bg-green-100 text-green-700 px-4 py-3 rounded mb-6">
+            <div class="bg-green-100 text-green-700 px-4 py-3 rounded-lg shadow-lg mb-6 text-center">
                 {{ session()->get('message') }}
             </div>
         @endif
 
-        <form action="{{ route('suplementos.store') }}" method="post" class="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form action="{{ route('suplementos.store') }}" method="post" class="w-full max-w-lg mx-auto">
+            <div class="flex flex-wrap -mx-6 mb-8">
             @csrf
 
-            <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="nome">Nome do Suplemento</label>
-                <input type="text" name="nome" id="nome" placeholder="Nome do Suplemento" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2" for="nome">Nome do Suplemento*</label>
+                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('nome') border-red-500 @enderror" 
+                       type="text" name="nome" id="nome" value="{{ old('nome') }}" placeholder="Nome do Suplemento">
+                @error('nome')
+                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="marca">Marca</label>
-                <input type="text" name="marca" id="marca" placeholder="Marca" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
+            <div class="w-full md:w-1/2 px-3">
+                <label class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2" for="marca">Marca*</label>
+                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('marca') border-red-500 @enderror" 
+                       type="text" name="marca" id="marca" value="{{ old('marca') }}" placeholder="Marca">
+                @error('marca')
+                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="quantidade">Quantidade</label>
-                <input type="number" name="quantidade" id="quantidade" placeholder="Quantidade" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2" for="quantidade">Quantidade*</label>
+                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('quantidade') border-red-500 @enderror" 
+                       type="number" name="quantidade" id="quantidade" value="{{ old('quantidade') }}" placeholder="Quantidade">
+                @error('quantidade')
+                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="peso">Peso</label>
-                <input type="number" name="peso" id="peso" placeholder="Peso" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2" for="peso">Peso*</label>
+                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('peso') border-red-500 @enderror" 
+                       type="number" name="peso" id="peso" value="{{ old('peso') }}" placeholder="Peso">
+                @error('peso')
+                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="formato">Formato</label>
-                <select name="formato" id="formato" placeholder="Formato" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="Pó">Pó</option>
-                    <option value="Cápsula">Cápsula</option>
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2" for="formato">Formato*</label>
+                <select name="formato" id="formato" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('formato') border-red-500 @enderror">
+                    <option value="Pó" {{ old('formato') == 'Pó' ? 'selected' : '' }}>Pó</option>
+                    <option value="Cápsula" {{ old('formato') == 'Cápsula' ? 'selected' : '' }}>Cápsula</option>
                 </select>
+                @error('formato')
+                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="funcao">Função</label>
-                <input type="text" name="funcao" id="funcao" placeholder="Função" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2" for="valor">Valor*</label>
+                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('valor') border-red-500 @enderror" 
+                       type="number" name="valor" id="valor" value="{{ old('valor') }}" placeholder="Valor">
+                @error('valor')
+                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="valor">Valor</label>
-                <input type="number" name="valor" id="valor" placeholder="Valor" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
+            <div class="w-full px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2" for="funcao">Função*</label>
+                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 @error('funcao') border-red-500 @enderror" 
+                       type="text" name="funcao" id="funcao" value="{{ old('funcao') }}" placeholder="Função">
+                @error('funcao')
+                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="flex items-center justify-between">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <div class="w-full flex justify-center mb-12">
+                <button type="submit" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out">
                     Criar
                 </button>
+            </div>
+
             </div>
         </form>
     </div>

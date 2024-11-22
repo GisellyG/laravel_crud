@@ -35,19 +35,23 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
-        $created = $this->funcionario->create([
-            'nome' => $request->input('nome'),
-            'data_de_nascimento' => $request->input('data_de_nascimento'),
-            'cpf' => $request->input('cpf'),
-            'numero' => $request->input('numero'),
-            'email' => $request->input('email')
-        ]);  
-
-        if($created){
-            return redirect()->route('funcionarios.index')->with('message', 'Criado com Sucesso!');
-        }
-
-        return redirect()->back()->with('message', 'Erro ao Criar!');
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'data_de_nascimento' => 'required|date',
+            'cpf' => 'required|string|size:11|unique:funcionarios,cpf',
+            'numero' => 'required|string|max:20',
+            'email' => 'required|email|max:255|unique:funcionarios,email',
+        ], [
+            'nome.required' => 'Esse campo é obrigatório.',
+            'data_de_nascimento.required' => 'Esse campo é obrigatório.',
+            'cpf.required' => 'Esse campo é obrigatório.',
+            'numero.required' => 'Esse campo é obrigatório.',
+            'email.required' => 'Esse campo é obrigatório.',
+        ]);
+    
+        Funcionario::create($request->all());
+    
+        return redirect()->route('funcionarios.index')->with('message', 'Funcionário cadastrado com sucesso!');
     
     }
 
@@ -73,13 +77,25 @@ class FuncionarioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $updated = $this->funcionario->where('id', $id)->update($request->except(['_token','_method']));
+        $funcionario = Funcionario::findOrFail($id);
 
-        if($updated){
-            return redirect()->route('funcionarios.index')->with('message', 'Atualizado com Sucesso!');
-        }
-
-        return redirect()->back()->with('message', 'Erro ao atualizar!');
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'data_de_nascimento' => 'required|date',
+            'cpf' => 'required|string|size:11|unique:funcionarios,cpf,' . $funcionario->id,
+            'numero' => 'required|string|max:20',
+            'email' => 'required|email|max:255|unique:funcionarios,email,' . $funcionario->id,
+        ], [
+            'nome.required' => 'Esse campo é obrigatório.',
+            'data_de_nascimento.required' => 'Esse campo é obrigatório.',
+            'cpf.required' => 'Esse campo é obrigatório.',
+            'numero.required' => 'Esse campo é obrigatório.',
+            'email.required' => 'Esse campo é obrigatório.',
+        ]);
+    
+        $funcionario->update($request->all());
+    
+        return redirect()->route('funcionarios.index')->with('message', 'Funcionário atualizado com sucesso!');
     }
 
     /**

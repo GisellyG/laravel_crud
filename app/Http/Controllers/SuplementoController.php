@@ -35,21 +35,27 @@ class SuplementoController extends Controller
      */
     public function store(Request $request)
     {
-        $created = $this->suplemento->create([
-            'nome' => $request->input('nome'),
-            'marca' => $request->input('marca'),
-            'quantidade' => $request->input('quantidade'),
-            'peso' => $request->input('peso'),
-            'formato' => $request->input('formato'),
-            'funcao' => $request->input('funcao'),
-            'valor' => $request->input('valor')
-        ]);  
-
-        if($created){
-            return redirect()->route('suplementos.index')->with('message', 'Criado com Sucesso!');
-        }
-
-        return redirect()->back()->with('message', 'Erro ao Criar!');
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'marca' => 'required|string|max:255',
+            'quantidade' => 'required|numeric|min:1',
+            'peso' => 'required|numeric|min:1',
+            'formato' => 'required|string|in:Pó,Cápsula',
+            'funcao' => 'required|string|max:255',
+            'valor' => 'required|numeric|min:0.01',
+        ], [
+            'nome.required' => 'Esse campo é obrigatório.',
+            'marca.required' => 'Esse campo é obrigatório.',
+            'quantidade.required' => 'Esse campo é obrigatório.',
+            'peso.required' => 'Esse campo é obrigatório.',
+            'formato.required' => 'Esse campo é obrigatório.',
+            'funcao.required' => 'Esse campo é obrigatório.',
+            'valor.required' => 'Esse campo é obrigatório.',
+        ]);
+    
+        Suplemento::create($request->all());
+    
+        return redirect()->route('suplementos.index')->with('message', 'Suplemento criado com sucesso!');
     }
 
     /**
@@ -73,13 +79,30 @@ class SuplementoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $updated = $this->suplemento->where('id', $id)->update($request->except(['_token','_method']));
-
-        if($updated){
-            return redirect()->route('suplementos.index')->with('message', 'Atualizado com Sucesso!');
-        }
-
-        return redirect()->back()->with('message', 'Erro ao atualizar!');
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'marca' => 'required|string|max:255',
+            'quantidade' => 'required|integer',
+            'peso' => 'required|numeric',
+            'formato' => 'required|in:Pó,Cápsula', 
+            'valor' => 'required|numeric',
+            'funcao' => 'required|string|max:255',
+        ], [
+    
+            'nome.required' => 'Esse campo é obrigatório.',
+            'marca.required' => 'Esse campo é obrigatório.',
+            'quantidade.required' => 'Esse campo é obrigatório.',
+            'peso.required' => 'Esse campo é obrigatório.',
+            'formato.required' => 'Esse campo é obrigatório.',
+            'valor.required' => 'Esse campo é obrigatório.',
+            'funcao.required' => 'Esse campo é obrigatório.',
+        ]);
+    
+        $suplemento = Suplemento::findOrFail($id);
+    
+        $suplemento->update($request->all());
+    
+        return redirect()->route('suplementos.index')->with('message', 'Suplemento atualizado com sucesso!');
     }
 
     /**

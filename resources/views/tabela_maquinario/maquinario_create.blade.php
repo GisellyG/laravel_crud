@@ -1,46 +1,74 @@
 <x-app-layout>
-    <div class="max-w-2xl mx-auto py-12">
-        <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Cadastrar Maquina</h2>
-
+    <div class="max-w-xl mx-auto py-12">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">Adicionar Maquinário</h2>
+        </div>
+    
         @if (session()->has('message'))
             <div class="bg-green-100 text-green-700 px-4 py-3 rounded mb-6">
                 {{ session()->get('message') }}
             </div>
         @endif
 
-        <form action="{{ route('maquinarios.store') }}" method="post" class="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            @csrf
+        <form action="{{ route('maquinarios.store') }}" method="POST" class="w-full max-w-lg mx-auto">
+            <div class="flex flex-wrap -mx-3 mb-8">
+                @csrf
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label for="nome" class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2">Nome*</label>
+                    <input type="text" name="nome" id="nome" value="{{ old('nome') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    @error('nome')
+                        <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="nome" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="nome">Nome</label>
-                <input type="text" name="nome" id="nome" placeholder="Nome" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label for="marca" class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2">Marca*</label>
+                    <input type="text" name="marca" id="marca" value="{{ old('marca') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    @error('marca')
+                        <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="marca" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="marca">Marca</label>
-                <input type="text" name="marca" id="marca" placeholder="Marca" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label for="garantia" class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2">Garantia*</label>
+                    <input type="text" name="garantia" id="garantia" value="{{ old('garantia') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    @error('garantia')
+                        <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="garantia" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="garantia">Garantia</label>
-                <input type="text" name="garantia" id="garantia" placeholder="Garantia" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label for="nota_fiscal" class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2">Nota Fiscal*</label>
+                    <input type="text" name="nota_fiscal" id="nota_fiscal" value="{{ old('nota_fiscal') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    @error('nota_fiscal')
+                        <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="nota_fiscal" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="peso">Nota Fiscal</label>
-                <input type="text" name="nota_fiscal" id="nota_fiscal" placeholder="Nota Fiscal" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label for="funcao_da_maquina" class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2">Função da Máquina*</label>
+                    <input type="text" name="funcao_da_maquina" id="funcao_da_maquina" value="{{ old('funcao_da_maquina') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    @error('funcao_da_maquina')
+                        <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="funcao_da_maquina" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="funcao_da_maquina">Função da Máquina</label>
-                <input type="text" name="funcao_da_maquina" id="funcao_da_maquina" placeholder="Função da Máquina" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label for="categoria_id" class="block uppercase tracking-wide dark:text-gray-300 text-xs font-bold mb-2">Categoria*</label>
+                    <select name="categoria_id" id="categoria_id" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                        <option value="" disabled selected>Selecione uma categoria</option>
+                        @foreach ($categorias as $categoria)
+                            <option value="{{ $categoria->id }}" {{ old('categoria_id') == $categoria->id ? 'selected' : '' }}>{{ $categoria->funcao }}</option>
+                        @endforeach
+                    </select>
+                    @error('categoria_id')
+                        <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="flex items-center justify-between">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Criar
-                </button>
+                <div class="w-full flex justify-center mt-8">
+                    <button type="submit" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out">Criar Maquinário</button>
+                </div>
             </div>
         </form>
-    </div>
 </x-app-layout>
