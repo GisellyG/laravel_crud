@@ -42,7 +42,7 @@ class CategoriaController extends Controller
         ]);
     
         Categoria::create([
-            'nome' => $request->input('nome')
+            'funcao' => $request->input('nome')
         ]);
  
         return redirect()->route('categorias.index')->with('message', 'Categoria criada com sucesso!');
@@ -78,7 +78,7 @@ class CategoriaController extends Controller
         $categoria = Categoria::findOrFail($id);
 
         $categoria->update([
-            'nome' => $request->input('nome')
+            'funcao' => $request->input('nome')
         ]);
     
         return redirect()->route('categorias.index')->with('message', 'Categoria atualizada com sucesso!');
